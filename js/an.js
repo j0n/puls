@@ -19,7 +19,7 @@ function checkCheckins(){
         x1.onerror = function(msg, url){alert(msg);};
         x1.onreadystatechange = function(data){
               if (x1.readyState === 4) {
-                  persCount = data.response.hereNow.count;
+//                  persCount = data.response.hereNow.count;
                   //document.getElementById('count').
             }
         };
