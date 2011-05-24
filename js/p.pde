@@ -12,7 +12,7 @@ void setup() {
    var dde = document.documentElement;
    var docWidth = Math.max(db.scrollWidth, dde.scrollWidth, db.offsetWidth, dde.offsetWidth, db.clientWidth, dde.clientWidth)
 
-  size(docWidth-10, 500);
+  size(docWidth, 300);
   frameRate(30);
   smooth();
   w = width+16;
@@ -21,7 +21,7 @@ void setup() {
 
 
 void draw() {
-  background(0);
+  background(255,255,255);
 	for(var c in curves){
 		calculateCurve(c);
 	}
@@ -30,7 +30,9 @@ void addCurve(key, count,c){
 	curves[key] = {
         'current':count,
         'kk':0,
-        'color':c
+        'color':c,
+        'theta':0.00,
+        'yvalues':new float[w/xspacing]
     };
     updateCurve(key, count);
 }
@@ -51,40 +53,40 @@ void calculateCurve(key){
   }
 
   for(var i = 0;i<10;i++){
-      calcWave(c.speed*i, k+(i*(c.count*0.4)),c.dx);
-      renderWave(c.color,c.alpha);
+      calcWave(c,c.speed*i, k+(i*(c.count*0.4)));
+      renderWave(c);
   }
   c.kk = k;
 }
 
 void updateCurve(key, count){
-    console.log('update', count);
-    count = (count+1)*3;
+    
+    count = (count+1)*2;
     var c = curves[key];
     c.count = count;
-    c.threshold = count * 5;
-    c.speed = count*2/30000;
-    c.period = 700 + count * 170 + Math.floor(Math.random(10)*1000);
+    c.threshold = count  + Math.floor(Math.random()*10);
+    c.speed = count/1000;
+    c.period = 700 + (count * 70) + Math.floor(Math.random()*1000);
     c.dx = (TWO_PI / c.period) * xspacing;
-    c.change = c.change > 0 ? -(count*0.9) : count*0.9;
-    c.alpha = count < 10 ? 20 : 30;
+    c.change = c.change > 0 ? -(count*0.4) : count*0.4;
+    c.alpha = count < 10 ? 30 : 40;
 }
 
-void calcWave(v, amp, dx) {
-  theta += v;
-  float x = theta;
+void calcWave(c,v, amp) {
+  c.theta += v;
+  float x = c.theta;
   for (int i = 0; i < yvalues.length; i++) {
-    yvalues[i] = sin(x)*amp-220;
-    x+=dx;
+    yvalues[i] = sin(x)*amp-420;
+    x+=c.dx;
   }
 }
 
-void renderWave(c, a) {
+void renderWave(c) {
     //console.log(c);
   for (int x = 0; x < yvalues.length; x++) {
     noStroke();
-    colorMode(RGB);
-    fill(c,a);
+    colorMode(RGB,255,255,255,255);
+    fill(c.color,c.alpha);
     ellipseMode(CENTER);
     ellipse(x*xspacing,width/2+yvalues[x],10,10);
   }

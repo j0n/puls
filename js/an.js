@@ -3,29 +3,33 @@ var persCount = 0;
 window.onload = function(){
 		var places = [
 						{
-                            'name':'solde',
-							'url':'https://api.foursquare.com/v2/venues/241005/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
-							'count':0,
-                            'color':0x777FFF00
+                            'name':'Njutbar',
+							'url':'https://api.foursquare.com/v2/venues/738899/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
+							'count':-1,
+                            'slug':'njutbar',
+                            'color':'0xFF78AB46'
 
 						},
 						{
-                            'name':'kaffebar',
-							'url': 'https://api.foursquare.com/v2/venues/13781349/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
-							'count':0,
-                            'color':0xAAAA0099
+                            'name':'Solde Kaffebar',
+							'url': 'https://api.foursquare.com/v2/venues/241005/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
+							'count':-1,
+                            'slug':'solde',
+                            'color':'0xFFCC1100'
 						},
 						{
-                            'name':'triangel stationen',
-							'url': 'https://api.foursquare.com/v2/venues/13690111/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
-							'count':0,
-                            'color':0xAA228429
+                            'name':'Kaffebar Möllan',
+							'url': 'https://api.foursquare.com/v2/venues/719567/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
+							'count':-1,
+                            'slug':'kaffebar',
+                            'color':'0xFFFFCC00'
 						},
 						{
-                            'name':'Centralen',
-							'url': 'https://api.foursquare.com/v2/venues/223593/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
-							'count':0,
-                            'color':0x99228429
+                            'name':'Lilla Kafferosteriet',
+							'url': 'https://api.foursquare.com/v2/venues/2843821/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
+							'count':-1,
+                            'slug': 'rost',
+                            'color':'0xFF007FFF'
 						}
 		];
         window.puls = new window.puls.View(places);
@@ -46,7 +50,6 @@ window.onload = function(){
             x1.onerror = function(msg, url){};
             x1.onreadystatechange = function(data){
                   if (x1.readyState === 4) {
-                  console.log(current.name, data.response.hereNow.count);
                     if(current.count != data.response.hereNow.count){
                         update(current, data.response.hereNow.count);
                     }
@@ -58,20 +61,31 @@ window.onload = function(){
 
         update = function(obj, count){
             obj.count = count;
-            window.updateCurve(obj.name,count);
+            window.updateCurve(obj.name,obj.count);
+            document.getElementById(obj.slug+'_count').innerHTML = count + '';
         }
 
         this.init = function(){
+                var html = '';;
             for(var  i=0, ii = self.places.length;i<ii;i++){
                 var p = self.places[i];
+                var color = p.color.substr(4)+ '';
+                html += '<div id="'+p.slug+'">';
+                html += '<span class="color" style="background-color:#'+color+'"></span>';
+                html += '<h2>'+p.name+'</h2>';
+                html += '<p id="'+p.slug+'_count" class="count">loading</p></div>';
                 window.addCurve(p.name, p.count,p.color);
-                //f4call(i);
+                f4call(i);
             }
+            document.getElementById('content').innerHTML = html;
+
             setInterval(check, 10000);
         }
+
         this.addPlace = function(key, data){
            this.places[key] = data; 
         }
+
         this.getPlaces = function(){
             return self.places;
         }
