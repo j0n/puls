@@ -4,12 +4,16 @@ body{
     padding;0;
     color:#333;
 }
-h1{
+h1, h2.sub{
     width:100%;
     text-align:center;
-    margin-top:50px;
+    margin:50px 0 10px;
     font-size:3em;
     text-shadow:0px 0px 6px #999;
+}
+h2.sub{
+    margin:0px 0 10px;
+    font-size:1em;
 }
 #content div{
     float:left;

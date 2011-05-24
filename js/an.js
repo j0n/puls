@@ -78,7 +78,6 @@ window.onload = function(){
                 f4call(i);
             }
             document.getElementById('content').innerHTML = html;
-
             setInterval(check, 10000);
         }
 
