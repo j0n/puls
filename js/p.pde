@@ -1,4 +1,4 @@
-int xspacing = 18;   // How far apart should each horizontal location be spaced
+int xspacing = 10;   // How far apart should each horizontal location be spaced
 int w;              // Width of entire wave
 
 float theta = 0.0;       // Start angle at 0
@@ -13,14 +13,14 @@ void setup() {
    var dde = document.documentElement;
    var docWidth = Math.max(db.scrollWidth, dde.scrollWidth, db.offsetWidth, dde.offsetWidth, db.clientWidth, dde.clientWidth)
 
-  size(docWidth-3, 500);
+  size(docWidth-10, 500);
   frameRate(30);
   smooth();
   w = width+16;
   yvalues = new float[w/xspacing];
-	addCurve('solde',5, 1555, 200);
-	addCurve('njutbar',25, 1600, 12);
-	addCurve('kaffebar',1, 1500, 120);
+	addCurve('solde',5, 1655, 200);
+	addCurve('njutbar',25, 2800, 12);
+	addCurve('kaffebar',1, 700, 120);
 }
 
 
@@ -43,6 +43,7 @@ void calculateCurve(key){
   if(cp != p && p != 0){
       cp = p;
       change = k > 0 ? -(cp*0.9) : cp*0.9;
+			//recaluate
   }
 
   if(cp == 0){ cp = 1;}
@@ -61,9 +62,9 @@ void calculateCurve(key){
   }
   var speed = (cp)*2/30000;
   var yT = cp/100;//y treshold
-  dx = (PI / pe) * xspacing;
+  dx = (TWO_PI / pe) * xspacing;
   for(var i = 0;i<10;i++){
-      calcWave(speed*i, k+(i*(cp + 2)));
+      calcWave(speed*i, k+(i*(cp*0.4)));
       renderWave(c.color);
   }
 }
@@ -83,9 +84,9 @@ void renderWave(i) {
     //var i = mouseX/4;
     i = Math.floor(i);
     colorMode(RGB,30,i,255,100);
-    fill(i,i,i,30);
+    fill(i,i+20,i,20);
     ellipseMode(CENTER);
-    ellipse(x*xspacing,width/2+yvalues[x],16,16);
+    ellipse(x*xspacing,width/2+yvalues[x],10,10);
   }
 }
 

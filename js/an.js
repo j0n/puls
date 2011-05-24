@@ -12,9 +12,22 @@ window.onload = function(){
        var t = i * 1000;
    }*/
     setInterval(checkCheckins, 5000);
+		var places = {
+						'1':{
+							'url':'https://api.foursquare.com/v2/venues/738899/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
+							'count':0
+						},
+						'2':{
+							'url': 'https://api.foursquare.com/v2/venues/4af565bbf964a52005f921e3/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R',
+							'count':0
+						}
+		}
+}]
 };
-
-function checkCheckins(){
+(function(){
+	
+})();
+function checkCheckins(url){
         var x1 = new jXHR();
         x1.onerror = function(msg, url){alert(msg);};
         x1.onreadystatechange = function(data){
@@ -23,7 +36,6 @@ function checkCheckins(){
                   //document.getElementById('count').
             }
         };
-        var url = 'https://api.foursquare.com/v2/venues/4af565bbf964a52005f921e3/herenow?oauth_token=Y5HZMBX20YYLNU5P34GCC40G3SFFTUMK40SBGLWCKEU4EE1R';
         x1.open("GET",url + '&callback=?');
         x1.send();
 }
